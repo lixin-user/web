@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    #map{
+      width: 800px;
+      height: 600px;
+      background-color: #ccc;
+      position:relative;
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<button id="btn">出现食物</button>
+<button id="btn1">点击让蛇移动一步</button>
+<script src="tools.js"></script>
+<script src="food.js"></script>
+<script src="snack.js"></script>
+<script src="game.js"></script>
+<script>
+  var map = document.getElementById('map');
+  var game = new Game();
+  game.star();
+</script>
+</body>
+</html>

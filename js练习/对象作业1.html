@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var obj1 =
+    {
+      name : "张三",
+      age : 18,
+      sex : "男",
+      hobby : "打篮球",
+      sayHi : function(){
+        console.log("我的名字叫"+this.name);
+      },
+      sayHobby : function(){
+        console.log("我的爱好是"+this.hobby);
+      },
+    }
+    function Hero(name,sex,price,jineng,miaoshu){
+      this.name = name;
+      this.sex = sex;
+      this.price = price;
+      this.jineng = jineng;
+      this.miaoshu = miaoshu;
+      this.yiDong = function(){
+        console.log("yidong");
+      }
+      this.gongJi = function(){
+        console.log("gongji");
+      }
+    }
+    for(key in obj1){
+      console.log(key+":"+obj1[key]);
+    }
+    obj1.sayHi();
+    obj1.sayHobby();
+    var obj2 = new Hero("上官婉儿","女",13888,"飞天","飞天的时候免伤");
+    for(key in obj2){
+      console.log(key+":"+obj2[key]);
+    }
+    obj2.yiDong();
+    obj2.gongJi();
+  </script>
+</body>
+</html>

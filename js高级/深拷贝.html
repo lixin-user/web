@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var obj = {
+      name:"qqq",
+      age:"18",
+      cat:{
+        name:"ww",
+        age:"11",
+      },
+      ar:[19,18],
+    }
+    function deep (obj){
+      if(obj instanceof Object){
+        console.log("1");
+        var ob = {};
+        for(var k in obj){
+          if(k instanceof Object){
+            return deep(k);
+          }
+          else{
+            ob[k] = obj[k];
+          }
+        }
+        return ob;
+      }
+      else{
+        var ob = [];
+        for(var k=0;k<obj.length;k++){
+          if(k instanceof Array){
+            return deep(k);
+          }
+          else{
+            ob[k] = obj[k];
+          }
+        }
+        return ob;
+      }
+    }
+    var oo = deep(obj);
+    console.log(oo);
+    oo.cat.name = "xxx";
+    console.log(oo);
+    console.log(obj);
+    </script>
+</body>
+</html>

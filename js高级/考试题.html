@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      table{
+          border-collapse: collapse;
+      }
+      
+      </style>
+</head>
+<body>
+      姓名: <input type="text" id="username"><br>
+      邮箱: <input type="text" id="email"><br>
+      电话: <input type="text" id="phone"><br>
+      地址: <input type="text" id="address"><br>
+    <input type="button" value="添加" id="btn">
+  <script>
+    var table = document.createElement('table');
+    table.border = '1px';
+    var thead = document.createElement('thead');
+    thead.style.backgroundColor = 'purple';
+    var str = '<tr><th>姓名</th><th>邮箱</th><th>电话</th><th>地址</th></tr>';
+    table.appendChild(thead);
+    thead.innerHTML = str;
+    document.body.appendChild (table);
+    var tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+    var btn = document.getElementById('btn');
+    var inputs = document.getElementsByTagName('input');
+    var index = 1;
+    btn.onclick = function () {
+      var arr = [];
+      var flag =  Array.prototype.some.call(inputs,function(index){
+        return index.value =='';
+      })
+      if(flag){
+        alert('请输入完整');
+      }
+      else{
+        Array.prototype.forEach.call(inputs,function(item){
+          if(item.id!='btn'){
+            arr.push(item.value);
+            item.value = '';
+          }
+        })
+        var tr = document.createElement('tr');
+        for(var i=0;i<arr.length;i++){
+          var td = document.createElement('td');
+          td.innerText = arr[i];
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+        if(index%2==0){
+          tr.style.backgroundColor = 'pink';
+        }
+        else{
+          tr.style.backgroundColor = 'red';
+        }
+        index++;
+      }
+    }
+  </script>
+</body>
+</html>

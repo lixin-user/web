@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function maxYueshu(a,b){
+      var sum = 1;
+      for(var i=2;i<=b;i++){
+        if(a%i==0&&b%i==0){
+          a=a/i;
+          b=b/i;
+          sum=sum*i;
+          i=1;
+        }
+      }
+      return sum;
+    }
+    console.log(maxYueshu(100,20));
+    </script>
+</body>
+</html>

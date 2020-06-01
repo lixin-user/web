@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <span>{{msg}}</span>
+    <button v-on:click = "change('1111')">click</button>
+    <button @click = "change1()">click2</button>
+</div>
+<script src="vue.js"></script>
+<script>
+  let mv = new Vue({
+    el:"#app",
+    data:{
+      msg:"hahaa",
+    },
+    methods:{
+      change(value){
+        this.msg = value;
+        console.log(event.target);
+      },
+      change1(){
+        this.msg = "fsdfsdfsdfsdf";
+      }
+    }
+  })
+</script>
+</body>
+</html>

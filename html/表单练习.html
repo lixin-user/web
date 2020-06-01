@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="a.php" method="get" name="form1" >
+		<p><label>用户名：<input type="text" value="请输入用户名" name="usename"></label></p>
+		<p><label>密&nbsp;码：<input type="password" value="请输入密码" maxlength="9" name="password"></label></p>
+		<P>
+			性&nbsp;别：<input type="radio" name="sex" checked="checked">女
+				       <input type="radio" name="sex" >男
+		</P>
+		<p>
+			籍&nbsp;贯：<select>
+							<option>请选择城市</option>
+							<option>重庆</option>
+							<option>北京</option>
+							<option>上海</option>
+							<option>成都</option>
+							<option>天津</option>
+							<option>哈尔滨</option>
+						</select>
+						<select>
+							<option>请选择区</option>
+							<option>沙坪坝</option>
+							<option>渝北区</option>
+							<option>渝中区</option>
+							<option>南坪区</option>
+							<option>璧山区</option>
+						</select>
+		</p>
+		<p>
+			爱&nbsp;好：<input type="checkbox" name="hobby" checked="checked">足球
+						<input type="checkbox" name="hobby" >篮球
+						<input type="checkbox" name="hobby">兵兵球
+		</p>
+		<p>
+			上传头像：<input type="file" name="file">
+		</p>
+		<P>
+			自我介绍：<textarea>请输入自我介绍</textarea>
+		</P>
+		<p>
+			<input type="submit">
+			<input type="reset" >
+		</p>
+	</form>
+</body>
+</html>

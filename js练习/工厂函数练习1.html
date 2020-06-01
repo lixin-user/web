@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function gongChang(name,age){
+      var obj1 = {};
+      obj1.name = name;
+      obj1.age = age;
+      obj1.play = function() {
+        console.log("我的名字是"+this.name);
+      }
+      return obj1;
+    }
+    var obj2 = gongChang("asd",18);
+    var obj3 = gongChang("ssd",40);
+    obj2.play();
+    obj3.play();
+    console.log(obj2.constructor.name);
+  </script>
+</body>
+</html>

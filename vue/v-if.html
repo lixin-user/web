@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h3 v-if = "flag">sdfasdfas</h3>
+    <h3 v-show = "flag2">56564546456</h3>
+    <h3 v-if = "a==1" >1111</h3>
+    <h3 v-else-if = "a==2">22222</h3>
+    <h3 v-else>3333</h3>
+    <button @click = "fn">click</button>
+    <button @click = "fn1">click1</button>
+  </div>
+  <script src="vue.js"></script>
+  <script>
+    let mv = new Vue({
+      el:"#app",
+      data:{
+        flag:false,
+        flag2:false,
+        a:4,
+      },
+      methods:{
+        fn(){
+          this.flag = !this.flag;
+        },
+        fn1(){
+          this.flag2 = !this.flag2;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

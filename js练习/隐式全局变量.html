@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+  var num1 = 11; //全局
+  function fn() {
+    var num1 = 22; //局部
+    num1 = 33; //局部
+    num2 = 44; //隐式全局
+    console.log(num1); 
+    console.log(num2);
+  }
+  fn();
+  console.log(num1);
+  console.log(num2);
+    </script>
+</body>
+</html>
