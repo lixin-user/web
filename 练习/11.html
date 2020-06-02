@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拓词Web前端机试练习题</title>
+    <meta name="description" content="拓词Web前端机试练习题">
+    <meta name="keywords" content="拓词">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #app {
+            width: 100%;
+            height: 100%;
+            background: #e4e2e2d0;
+            text-align: center;
+        }
+
+        #app .title {
+            height: 2rem;
+            line-height: 2rem;
+            padding-top: 5rem;
+        }
+
+        #app .count {
+            margin-top: .133333rem;
+        }
+
+        #app .sentence {
+            font-weight: bold;
+            margin: 2rem 0;
+        }
+
+        #app .analysis {
+            margin: 2rem 0;
+            color: #ff0000;
+            display: none;
+        }
+
+        #app .option {
+            width: 10rem;
+            height: 2.5rem;
+            line-height: 2.5rem;
+            border: 1px solid #000000;
+            border-radius: 0.5rem;
+            margin: 1rem auto;
+            background: #ffffff;
+        }
+
+        #app .btn-answer {
+            background: #cccccc;
+        }
+
+        #app .btn-next {
+            display: none;
+            background: #047e04;
+        }
+
+        #app .btn-reanswer {
+            display: none;
+            background: pink;
+
+        }
+
+        #app .answer-right {
+            color: #047e04;
+            text-decoration: underline;
+        }
+
+        #app .answer-wrong {
+            color: rgb(219, 125, 140);
+            text-decoration: underline;
+        }
+
+        #app .options .right {
+            background: #047e04;
+        }
+
+        #app .options .wrong {
+            background: rgb(219, 125, 140);
+        }
+
+        #app .show-result{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h2 class="title"> </h2>
+        <div class="count">
+            <span class="curr"> </span>/<span class="total"> </span>
+        </div>
+        <div class="sentence"> </div>
+        <div class="analysis">dddd</div>
+        <div>
+            <div class="options">
+            </div>
+            <div class="option btn-next">下一题</div>
+            <div class="option btn-answer">看答案</div>
+            <div class="option btn-reanswer">重答</div>
+        </div>
+        <div class="show-result"></div>
+    </div>
+    <script>
+
+        let app = (function () {
+
+            let settings, index = 0;
+            let q, qArr = [];
+
+            class Question {
+                /* constructor(id, group_id, count, title, sentence, options, answer, analysis, vwark, have_video, is_collect) {
+                    this.id = id;
+                    this.groupId = group_id;
+                    this.count = count;
+                    this.title = title;
+                    this.sentence = sentence;
+                    this.options = options;
+                    this.answer = answer;
+                    this.analysis = analysis;
+                    this.vwark = vwark;
+                    this.haveVideo = have_video;
+                    this.isCollect = is_collect;
+                } */
+
+                constructor(q) {
+                    Object.assign(this, q);
+                }
+            }
+
+            return {
+                init(opt) {
+                    let _this = this;
+                    settings = opt;
+                    //获取数据
+                    this.data = [{
+                        "id": 1,
+                        "group_id": 1,
+                        "count": 1,
+                        "title": "TEST1 ",
+                        "sentence": " David denied__the money.",
+                        "options": "stealing,to steal",
+                        "answer": "stealing",
+                        "analysis": "deny 「否认」 后接动名词，表示 「否认做过某事」。",
+                        "vwark": "【 永春高中】",
+                        "have_video": 1,
+                        "is_collect": true
+                    }, {
+                        "id": 2,
+                        "group_id": 1,
+                        "count": 2,
+                        "title": "TEST1 ",
+                        "sentence": " __he told you isn’t true.",
+                        "options": "What,Whether",
+                        "answer": "What",
+                        "analysis": "What he told you isn’ t true. 他告诉你的不是真的。 What 为复合，引导名词子句（名词性从句）做主词(主语)。",
+                        "vwark": "【 西松高中】",
+                        "have_video": 2,
+                        "is_collect": false
+                    }, {
+                        "id": 3,
+                        "group_id": 1,
+                        "count": 3,
+                        "title": "TEST1 ",
+                        "sentence": " Are you going to leave the door__?",
+                        "options": "opened,open",
+                        "answer": "open",
+                        "analysis": "「 leave+ 受词（宾语） + 受词补语（宾语补语）」表 「把～置于… 状态」， leave the door open指 「让门开着（ 没有关） 」， 补语用形容词 open 「开着的」， 表状态。",
+                        "vwark": "【 三重高中】",
+                        "have_video": 3,
+                        "is_collect": false
+                    }/* , {
+                        "id": 4,
+                        "group_id": 1,
+                        "count": 4,
+                        "title": "TEST1 ",
+                        "sentence": " Please keep the door__.",
+                        "options": "closed,close",
+                        "answer": "closed",
+                        "analysis": "keep the door closed 让门关着（ 不要打开） ， closed 为形 容词。 close 当动词表 「关闭」， 当形容词是 「靠近的」， 句 意、用法皆不合",
+                        "vwark": "",
+                        "have_video": 4,
+                        "is_collect": false
+                    }, {
+                        "id": 5,
+                        "group_id": 1,
+                        "count": 5,
+                        "title": "TEST1 ",
+                        "sentence": " What__you cry?",
+                        "options": "caused,made",
+                        "answer": "made",
+                        "analysis": "由受词(宾语)后的原形动词可知， 空格需要使役动词(表示使...让...的含义,如have, let, make) made。 caused 为一般动词， 接受词（宾语）后要用 to do 。",
+                        "vwark": "【 永平高中】",
+                        "have_video": 5,
+                        "is_collect": true
+                    }, {
+                        "id": 6,
+                        "group_id": 1,
+                        "count": 6,
+                        "title": "TEST1 ",
+                        "sentence": " __things carefully.",
+                        "options": "Observe,To observe",
+                        "answer": "Observe",
+                        "analysis": "Observe things carefully. 要小心观察事物。 命令句用原形动词。",
+                        "vwark": "【北京大学】",
+                        "have_video": 6,
+                        "is_collect": true
+                    }, {
+                        "id": 7,
+                        "group_id": 1,
+                        "count": 7,
+                        "title": "TEST1 ",
+                        "sentence": " Do you feel like__for a swim?",
+                        "options": "to go,going",
+                        "answer": "going",
+                        "analysis": "feel like doing 想要做某事 ,go for a swim 去游泳（= go swimming）",
+                        "vwark": "【陝西大学】",
+                        "have_video": 7,
+                        "is_collect": false
+                    }, {
+                        "id": 8,
+                        "group_id": 1,
+                        "count": 8,
+                        "title": "TEST1 ",
+                        "sentence": " I’ ll be back__ten minutes.",
+                        "options": "in,after",
+                        "answer": "in",
+                        "analysis": "in 用于未来式， 表示 「再过...时间」。",
+                        "vwark": "【日本爱知工大】",
+                        "have_video": 8,
+                        "is_collect": false
+                    }, {
+                        "id": 9,
+                        "group_id": 1,
+                        "count": 9,
+                        "title": "TEST1 ",
+                        "sentence": " __anything happens, call me immediately.",
+                        "options": "In case,Even though",
+                        "answer": "In case",
+                        "analysis": "In case anything happens, call me immediately. 万一有任何事情发生， 立刻打电话给我。1.in case 万一； 如果（ 表示条件时候等于if） 2. even though即使；虽然（表让步时候等于though）",
+                        "vwark": "【 四川大学】",
+                        "have_video": 9,
+                        "is_collect": false
+                    }, {
+                        "id": 10,
+                        "group_id": 1,
+                        "count": 10,
+                        "title": "TEST1 ",
+                        "sentence": " She sat__her children.",
+                        "options": "surrounded by,surrounding",
+                        "answer": "surrounded by",
+                        "analysis": "She sat surrounded by her children. 她坐着被她的小孩包围。 依句意为「被动」，用 surrounded by... 做补语。",
+                        "vwark": "【 日本西南院大】",
+                        "have_video": 10,
+                        "is_collect": false
+                    }, {
+                        "id": 11,
+                        "group_id": 1,
+                        "count": 11,
+                        "title": "TEST1 ",
+                        "sentence": " __Sunday, the bank was closed.",
+                        "options": "Being,It being",
+                        "answer": "It being",
+                        "analysis": "It being Sunday, the bank was closed. 因为是周日， 银行没开。 前句原为 Because it was Sunday， 改成分词构句时， 主词(主语)it 和后句 the bank 不同， 故保留。",
+                        "vwark": "【日本北海学园大】",
+                        "have_video": 11,
+                        "is_collect": false
+                    }, {
+                        "id": 12,
+                        "group_id": 1,
+                        "count": 12,
+                        "title": "TEST1 ",
+                        "sentence": " __ill,I stayed at home.",
+                        "options": "Being,It being",
+                        "answer": "Being",
+                        "analysis": "前句原为 Because I was ill， 改成分词构句时， 主词（主句）和后句相同， 故省略。",
+                        "vwark": "",
+                        "have_video": 12,
+                        "is_collect": false
+                    }, {
+                        "id": 13,
+                        "group_id": 1,
+                        "count": 13,
+                        "title": "TEST1 ",
+                        "sentence": " It is essential that you__there today.",
+                        "options": "are,be",
+                        "answer": "be",
+                        "analysis": "It is essential 后的 that 子句中，助动词 should 常省略， 用原形动词，表示「 … 是必须的」。",
+                        "vwark": "【 日本樱美林大】",
+                        "have_video": 13,
+                        "is_collect": false
+                    }, {
+                        "id": 14,
+                        "group_id": 1,
+                        "count": 14,
+                        "title": "TEST1 ",
+                        "sentence": " There is __the future.",
+                        "options": "no predicting,not to predict",
+                        "answer": "no predicting",
+                        "analysis": "There is no predicting the future. 未来是无法预测的。 There is no+ doing 做～是不可能的 （= It is impossible to do ）",
+                        "vwark": "【 成功高中】",
+                        "have_video": 14,
+                        "is_collect": false
+                    }, {
+                        "id": 15,
+                        "group_id": 1,
+                        "count": 15,
+                        "title": "TEST1 ",
+                        "sentence": "I generally__many dogs near my school.",
+                        "options": "see,am seeing",
+                        "answer": "see",
+                        "analysis": "generally 「一般； 通常」 和现在式连用。",
+                        "vwark": "【 日本明治大】",
+                        "have_video": 15,
+                        "is_collect": false
+                    }, {
+                        "id": 16,
+                        "group_id": 1,
+                        "count": 16,
+                        "title": "TEST1 ",
+                        "sentence": " I have no idea when he__again.",
+                        "options": "come,will come",
+                        "answer": "will come",
+                        "analysis": "when 引导名词子句（名词性从句）， 做I have no idea= I don’ t know 的受词（宾语）， 依句意该 用未来式。",
+                        "vwark": "【 日本玉川大】",
+                        "have_video": 16,
+                        "is_collect": false
+                    }, {
+                        "id": 17,
+                        "group_id": 1,
+                        "count": 17,
+                        "title": "TEST1 ",
+                        "sentence": " They__in Tokyo tomorrow.",
+                        "options": "will be arrived,are arriving",
+                        "answer": "are arriving",
+                        "analysis": "arrive 「到达」 为来去动词， 可用现在进行式表未来。 arrive 为不及物动词， 没有被动。",
+                        "vwark": "【 日本东北学院大 】",
+                        "have_video": 17,
+                        "is_collect": true
+                    }, {
+                        "id": 18,
+                        "group_id": 1,
+                        "count": 18,
+                        "title": "TEST1 ",
+                        "sentence": " It__time to learn a new language.",
+                        "options": "spends,takes",
+                        "answer": "takes",
+                        "analysis": "It是虚主词(不是真正主语)， 后面的不定词(不定式)是真正主词(主语)， 表示事物「花」时间用 takes。",
+                        "vwark": "【 三重高中】",
+                        "have_video": 18,
+                        "is_collect": false
+                    }, {
+                        "id": 19,
+                        "group_id": 1,
+                        "count": 19,
+                        "title": "TEST1 ",
+                        "sentence": " The king is not kind__cruel.",
+                        "options": "only,but",
+                        "answer": "but",
+                        "analysis": "not A but B 不是A 而是B",
+                        "vwark": "【 育成高中】",
+                        "have_video": 19,
+                        "is_collect": false
+                    }, {
+                        "id": 20,
+                        "group_id": 1,
+                        "count": 20,
+                        "title": "TEST1 ",
+                        "sentence": " The movie is worth__.",
+                        "options": "to be seen,seeing",
+                        "answer": "seeing",
+                        "analysis": "be worth+ doing「值得～」 有三个条件：1.doing 为主动 2.及物动词3.无受词(宾语)。",
+                        "vwark": "【 成功高中】",
+                        "have_video": 20,
+                        "is_collect": false
+                    } */];
+
+                    this.holder = document.querySelector(settings.el);
+                    this.title = this.holder.querySelector('.title');
+                    this.count = this.holder.querySelector('.count');
+                    this.curr = this.holder.querySelector('.curr');
+                    this.total = this.holder.querySelector('.total');
+                    this.sentence = this.holder.querySelector('.sentence');
+                    this.analysis = this.holder.querySelector('.analysis');
+                    this.options = this.holder.querySelector('.options');
+                    this.btnNext = this.holder.querySelector('.btn-next');
+                    this.btnGetAnswer = this.holder.querySelector('.btn-answer');
+                    this.btnReAnswer = this.holder.querySelector('.btn-reanswer');
+
+
+                    this.options.addEventListener('click', function (e) {
+                        var option = e.target;
+                        if (e.target.classList.contains("option")) {
+                            let userAnswer = option.innerHTML;
+                            var result;
+
+                            let arrOption = _this.options.querySelectorAll('.option');
+                            for (let i = 0; i < arrOption.length; i++) {
+                                if (arrOption[i].innerHTML == q.answer) {
+                                    arrOption[i].classList.add('right');
+                                }
+                            }
+                            if (userAnswer != q.answer) {
+                                option.classList.add('wrong');
+                                result = 'wrong';
+                                q.correct = false;
+                            } else {
+                                result = 'right';
+                                q.correct = true;
+                            }
+
+                            setTimeout(function () {
+                                _this.getAnswer(result);
+                            }, 1000);
+
+                        }
+                    }, false);
+
+                    this.btnNext.addEventListener('click', function () {
+                        index++;
+                        if (index == _this.data.length) {
+                            // index = _this.data.length - 1;
+                            _this.printResult();
+                        }else{
+                            _this.next(index);
+                        }
+                    }, false);
+
+                    this.btnGetAnswer.addEventListener('click', function () {
+                        _this.getAnswer('wrong');
+                    }, false);
+
+                    this.btnReAnswer.addEventListener('click', function () {
+                        _this.reAnswer();
+                    }, false);
+
+                    this.next(index);
+                },
+                next(index) {
+                    q = new Question(this.data[index]);
+                    qArr.push(q);
+                    this.prepare(q);
+                },
+                prepare() {
+                    this.title.innerHTML = q.title;
+                    this.curr.innerHTML = q.count;
+                    this.total.innerHTML = this.data.length;
+                    this.sentence.innerHTML = q.sentence;
+
+                    let arrOptions = q.options.split(',');
+                    var strOptions = '';
+                    for (let i = 0; i < arrOptions.length; i++) {
+                        strOptions += `<div class="option">${arrOptions[i]}</div>`;
+                    }
+                    this.options.innerHTML = strOptions;
+
+                    // 样式重置
+                    this.options.style.display = 'block';
+                    this.btnReAnswer.style.display = 'none';
+                    this.btnGetAnswer.style.display = 'block';
+                    this.btnNext.style.display = 'none';
+                    this.analysis.style.display = 'none';
+                }, 
+                getAnswer(result) {
+                    this.options.style.display = 'none';
+                    this.analysis.style.display = 'block';
+                    this.btnGetAnswer.style.display = 'none';
+
+                    this.analysis.innerHTML = q.analysis;
+
+                    let __ = '';
+                    if (result == 'right') {
+                        this.btnNext.style.display = 'block';
+                        __ = q.sentence.replace(/__/, `<span class="answer-right"> ${q.answer} </span>`);
+                    } else {
+                        this.btnReAnswer.style.display = 'block';
+                        __ = q.sentence.replace(/__/, `<span class="answer-wrong"> ${q.answer} </span>`);
+                    }
+                    this.sentence.innerHTML = __;
+                },
+                reAnswer() {
+                    this.prepare();
+                    
+                },
+                printResult() {
+                    let correctCount = 0;
+                    for(let i=0; i<qArr.length; i++){
+                        if(qArr[i].correct){
+                            correctCount++;
+                        }
+                    }
+
+                    this.title.style.display = 'none';
+                    this.count.style.display = 'none';
+                    this.sentence.style.display = 'none';
+                    this.options.style.display = 'none';
+                    this.btnReAnswer.style.display = 'none';
+                    this.btnGetAnswer.style.display = 'none';
+                    this.btnNext.style.display = 'none';
+                    this.analysis.style.display = 'none';
+                    
+                    this.showResult = this.holder.querySelector('.show-result');
+                    this.showResult.innerHTML = `正确数：${correctCount}, 错题数：${this.data.length - correctCount}`;
+                    this.showResult.style.display = 'block';
+                }
+
+            };
+        })();
+
+        app.init({
+            el: '#app'
+        });
+    </script>
+</body>
+
+</html>
