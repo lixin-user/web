@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <form action="1.php">
+        用户名:  <input type="text" name="name" id="username">(3-6位)
+        <br>
+        密码: <input type="password" name="pwd" id="pwd">(6-8位)
+        <br>
+        <input type="submit" value=" 登 录 " id="btnLogin">
+      </form>
+<script>
+  var btn = document.getElementById('btnLogin');
+  var username = document.getElementById('username');
+  var password = document.getElementById('pwd');
+  btn.onclick = function(){
+    var flag = true;
+    username.style.backgroundColor = '';
+    password.style.backgroundColor = '';
+    var username1 = username.value.trim();
+    if(username1.length<3||username1.length>6){
+        username.style.backgroundColor = 'yellow';
+        flag = false;
+    }
+    var password1 = password.value.trim();
+    if(password1.length<6||password1.length>8){
+        password.style.backgroundColor = 'yellow';
+        flag = false;
+    }
+    return flag;
+  }
+ </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+      table{
+        border-collapse: collapse;      
+      }
+    </style>
+</head>
+<body>
+  <script>
+    var bodyData = [
+    {name: 'zs', subject: '语文', score: 100},
+    {name: 'ls', subject: '数学', score: 80},
+    {name: 'sdb', subject: '体育', score: 0},
+    {name: 'gw', subject: '英语', score: 59},
+    {name: 'bzr', subject: '数学', score: 50}
+  ];
+  // 表头数据
+  var headData = ['姓名', '科目', '成绩', '操作'];
+  var table = document.createElement('table');
+  table.align = 'center';
+  table.border = '1px';
+  table.width = '300px';
+  var thead = document.createElement('thead');
+  thead.style.backgroundColor = '#ccc';
+  table.appendChild(thead);
+  var tbody = document.createElement('tbody');
+  tbody.align = 'center';
+  table.appendChild(tbody);
+  var tr = document.createElement('tr');
+  for(var i=0;i<headData.length;i++){
+    var th = document.createElement('th');
+    th.innerText = headData[i];
+    tr.appendChild(th);
+  }
+  thead.appendChild(tr);
+  for(var i=0;i<bodyData.length;i++){
+    var tr = document.createElement('tr');
+    for(var key in bodyData[i]){
+      var td = document.createElement('td');
+      td.innerText = bodyData[i][key];
+      tr.appendChild(td);
+     }
+    var td = document.createElement('td');
+    var a =  document.createElement('a');
+    a.innerText = '删除';
+    a.href = '';   
+    td.appendChild(a); 
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    a.onclick = fn;
+  }
+   function fn(){
+    var result = confirm('您确定要删除吗?');
+    if(result==true){
+      var td = this.parentNode;
+      var tr = td.parentNode;
+      tbody.removeChild(tr); 
+      return false;
+    }
+  }
+  document.body.appendChild(table);
+  </script>
+</body>
+</html>

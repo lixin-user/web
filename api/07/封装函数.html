@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+    }
+    div{
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      position:absolute;
+    }
+  </style>
+</head>
+<body>
+<button id="btn">点击让box从0移动到400</button>
+<button id="btnBack">点击让box从400移动到0</button>
+<div id="box"></div>
+<script>
+   var btn = document.getElementById('btn');
+    var box = document.getElementById('box');
+    var btnBack = document.getElementById('btnBack');
+    var step = 10;
+    var timeid;
+    btn.onclick = function(){
+      if(timeid){
+        clearInterval(timeid);
+      }
+      timeid = setInterval(fn1,15);
+    }
+    btnBack.onclick = function(){
+      if(timeid){
+        clearInterval(timeid);
+      }
+      timeid = setInterval(fn2,15);
+    }
+    function fn1(){
+      var current =  box.offsetLeft;
+      console.log(current);
+      box.style.left = (current + step)+'px';
+      if(current+step>=400){
+        box.style.left = 400 + 'px';
+        clearInterval(timeid);
+      }
+    }
+    function fn2(){
+      var current =  box.offsetLeft;
+      console.log(current);
+      box.style.left = (current - step)+'px';
+      if(current+step<=0){
+        box.style.left = 0 + 'px';
+        clearInterval(timeid);
+      }
+    }
+  
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style type="text/css">
+    * {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      border: 0;
+    }
+    
+    .all {
+      width: 500px;
+      height: 300px;
+      padding: 7px;
+      border: 1px solid #ccc;
+      margin: 100px auto;
+      position: relative;
+    }
+    
+    .screen {
+      width: 500px;
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .screen li {
+      width: 500px;
+      height: 300px;
+      overflow: hidden;
+      float: left;
+    }
+    
+    .screen ul {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 3000px;
+    }
+    
+    .all ol {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      line-height: 20px;
+      text-align: center;
+    }
+    
+    .all ol li {
+      float: left;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    
+    .all ol li.current {
+      background: yellow;
+    }
+    
+    #arr {
+      display: none;
+      z-index: 1000;
+      
+    }
+    
+    #arr span {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      margin-top: -20px;
+      background: #000;
+      cursor: pointer;
+      line-height: 40px;
+      text-align: center;
+      font-weight: bold;
+      font-family: '黑体';
+      font-size: 30px;
+      color: #fff;
+      opacity: 0.3;
+      border: 1px solid #fff;
+    }
+    
+    #arr #right {
+      right: 5px;
+      left: auto;
+    }
+  </style>
+</head>
+
+<body>
+<div class="all" id='box'>
+  <div class="screen" id="screen">
+    <ul>
+      <li>
+        <img src="images/1.jpg" width="500" height="300"/>
+      </li>
+      <li>
+        <img src="images/2.jpg" width="500" height="300"/>
+      </li>
+      <li>
+        <img src="images/3.jpg" width="500" height="300"/>
+      </li>
+      <li>
+        <img src="images/4.jpg" width="500" height="300"/>
+      </li>
+      <li>
+        <img src="images/5.jpg" width="500" height="300"/>
+      </li>
+    </ul>
+    <ol>
+    </ol>
+  </div>
+  <div id="arr">
+    <span id="left">&lt;</span>
+    <span id="right">&gt;</span>
+  </div>
+</div>
+
+<script src="animate.js"></script>
+<script>
+  var arr = document.getElementById('arr');
+  var left = document.getElementById('left');
+  var right = document.getElementById('right');
+  var box = document.getElementById('box');
+  var screen = document.getElementById('screen');
+  var ul = screen.children[0];
+  var ol = screen.children[1];
+  var lis = ul.children;
+  var flag = 0;                                                                    
+  for(var i=0;i<lis.length;i++){
+    var li = document.createElement('li');
+    li.dataset.index = i;
+    li.innerHTML = i+1;
+    ol.appendChild(li);
+    li.onclick = fn;
+    if (i == 0) {
+      li.className = 'current';
+    }
+  }
+  var newNode1 = lis[0].cloneNode(true);
+  ul.appendChild(newNode1);
+  function fn(){
+    for(var i=0;i<ol.children.length;i++){
+      ol.children[i].className = '';
+    }
+    var target =  this.dataset.index*screen.offsetWidth;
+    animate(ul, -target, 20);
+    this.className = 'current';
+    flag = this.dataset.index;
+  }
+  box.onmouseenter = function(){
+    arr.style.display = 'block';
+    clearInterval(box.time);
+  }
+  box.onmouseleave = function(){
+    if(box.time){
+      clearInterval(box.time);
+    }
+    arr.style.display = 'none';
+    box.time = setInterval(function(){
+      right.onclick();
+    },1000);
+    
+  }
+  right.onclick = function(){
+    if(flag==ol.children.length-1){
+      for(var i=0;i<ol.children.length;i++){
+      ol.children[i].className = '';
+    }
+    var target = ol.children.length *screen.offsetWidth;
+      animate(ul, -target, 20,function(){
+        //4.4.2 滚动到第6张之后,要立刻跳到第一张
+        ul.style.left = '0px';
+        //indexGlobal应该和展示的图片保持一致
+        flag = 0;});
+      
+      ol.children[0].className = 'current';
+    }
+    else{
+      flag++;
+      ol.children[flag].onclick();
+    }
+  }
+  left.onclick = function(){
+    if(flag==0){
+      for(var i=0;i<ol.children.length;i++){
+        ol.children[i].className = '';
+      }
+      flag = ol.children.length;
+      var target = flag*screen.offsetWidth;
+      ul.style.left = -target +'px';
+      flag--;
+      ol.children[flag].onclick(); 
+      ol.children[flag].className = 'current';
+    }
+    else{
+      flag--;
+      ol.children[flag].onclick();
+    } 
+  }
+
+</script>
+  
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    img {
+        display: block;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .box {
+        width: 350px;
+        height: 350px;
+        margin: 100px;
+        border: 1px solid #ccc;
+        position: relative;
+    }
+
+    .big {
+        width: 400px;
+        height: 400px;
+        position: absolute;
+        top: 0;
+        left: 360px;
+        overflow: hidden;
+        display: none;
+    }
+
+    .big img {
+        position: absolute;
+
+    }
+
+    .mask {
+        width: 175px;
+        height: 175px;
+        background: rgba(255, 255, 0, 0.4);
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        cursor: move;
+        display: none;
+    }
+
+    .small {
+        position: relative;
+    }
+</style>
+</head>
+<body>
+  <div class="box" id="box">
+    <div class="small" id="small" >
+        <img src="images/small.jpg" width="350" alt="" />
+        <div class="mask" id="mask"></div>
+    </div>
+    <div class="big" id="big" >
+        <img src="images/big.jpg" width="800" alt="" id="img" />
+    </div>
+    <script>
+      var xiaoBox = document.getElementById('mask');
+      var bigBox = document.getElementById('big');
+      var box = document.getElementById('small');
+      var Bbox = document.getElementById('box');
+      var img = document.getElementById('img');
+      box.onmouseenter = function(){
+        xiaoBox.style.display = 'block';
+        bigBox.style.display = 'block';
+        console.log('鼠标移入触发了');
+      }
+      box.onmousemove = function(e){
+          var x = e.clientX;
+          var y = e.clientY;
+          var targetX = (x - Bbox.offsetLeft) - (xiaoBox.offsetWidth/2);
+          var targetY = (y - Bbox.offsetTop) - (xiaoBox.offsetHeight/2);
+          var maxX = box.offsetWidth - xiaoBox.offsetWidth;
+          var maxY = box.offsetHeight - xiaoBox.offsetHeight;
+          if(targetX<0){
+            targetX = 0;
+          }
+          if(targetX>maxX){
+            targetX = maxX;
+          }
+          if(targetY<0){
+            targetY = 0;
+          }
+          if(targetY>maxY){
+            targetY = maxY;
+          }
+          xiaoBox.style.left = targetX + 'px';
+          xiaoBox.style.top = targetY + 'px';
+          var imgX = img.offsetWidth - bigBox.offsetWidth;
+          var imgY = img.offsetHeight - bigBox.offsetHeight;
+          img.style.left = -(targetX/maxX*imgX)+'px';
+          img.style.top = -(targetY/maxY*imgY)+'px';
+        }
+      small.onmouseleave = function(){
+            mask.style.display = 'none';
+            big.style.display = 'none';
+            console.log('鼠标移出触发了');
+        }
+    </script>
+</div>
+</body>
+</body>
+</html>

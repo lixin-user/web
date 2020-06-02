@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function quickSort(arr,i,j) {
+      if(i<j){
+      var l = i;
+var len = j;
+var dir = 0;
+var num = arr[i];
+while(i != j) {
+if(dir == 0) {
+if(arr[j] <= num) {
+arr[i] = arr[j];
+dir = 1;
+}else{
+j--;
+}
+}else{
+if(arr[i] > num){
+arr[j] = arr[i];
+dir = 0;
+}else{
+i++;
+}
+}
+}
+arr[i] = num;
+var ps = i;
+console.log(ps);
+if(ps>1){
+  console.log('hh');
+  quickSort(arr, l, ps - 1);
+  console.log(ps+'len:'+len);
+  quickSort(arr, ps+1, len);
+     }
+}
+}
+// arr1=[42,35,91,16,25,23,14,21,6,9,42];
+arr1=[12,3,42,35,91,16,25,23,14,21,6,9];
+quickSort(arr1,0,arr1.length-1);
+console.log(arr1);
+  </script>
+</body>
+</html>

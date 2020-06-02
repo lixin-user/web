@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <body>
+        <button id="btn"> 点击按钮,假装去服务器拿数据</button>
+        <div id = "container">
+          
+        </div>
+    <script>
+      var arr = ['html', 'css', 'es5.0js', 'dom'];
+      var btn = document.getElementById('btn');
+      btn.onclick = function(){
+        var con = document.getElementById('container');
+        var ul = document.createElement('ul');
+        for(var i=0;i<arr.length;i++){
+          var li = document.createElement('li');
+          li.innerText = arr[i];
+          ul.appendChild(li);  
+        }
+        con.appendChild(ul);
+        var arr1 = document.getElementsByTagName('li');
+        console.log(arr1);
+        for(var i=0;i<arr1.length;i++){
+          arr1[i].onmouseover = fn; 
+          }
+          function fn(){
+          for(var i = 0; i < arr1.length; i++) {
+          arr1[i].style.backgroundColor = '';
+        }
+          this.style.backgroundColor = '#ccc';
+        }
+      }
+    </script>
+</body>
+</html>

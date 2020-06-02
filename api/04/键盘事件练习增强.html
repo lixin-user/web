@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <input type="text"><br><br><br><br>
+    <input type="text"><br>
+    <input type="text"><br><br>
+    <input type="text"><br><br>
+    <input type="text"><br>
+    <input type="text"><br>
+    <script>
+      var inputs = document.getElementsByTagName('input');
+      for(var i=0;i<inputs.length;i++){
+        inputs[i].onkeydown = fn;
+      }
+      function fn(e){
+        if(e.keyCode==13){
+          var node1 = getNextNode(this);
+          if(node1!=null){
+            node1.focus();
+          }
+        }
+      }
+      function getNextNode(ele){
+        var next1 = ele.nextElementSibling; 
+          if(next1==null){
+            return null;
+          }
+          if(next1.nodeName === 'INPUT'){
+            return next1;
+          }
+          else{
+            return getNextNode(next1);
+          }
+      }
+    </script>
+</body>
+</html>

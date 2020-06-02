@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="">
+	.a{
+		width: 100px;
+		height: 100px;
+		background-color: red;
+		float: left;
+	}
+	.c{
+		width: 100px;
+		height: 100px;
+		background-color: blue;
+		float: left;
+	}
+	 .b{
+		width: 100px;
+		height: 100px;
+		background-color: green;
+		float: left;
+	}
+	.e{
+		width: 1000px;
+		height: 1000px;
+		background-color: black;
+	}
+	.clearfix::after {
+    content:'';
+    display:block;
+    clear:both;
+    height:0;
+    visibility:hidden;
+}
+.clearfix {
+    *zoom:1;
+}
+	</style>
+</head>
+<body>
+	
+	<div class="d clearfix">
+		<div class="a"></div>
+		<div class="b"></div>
+		<div class="c"></div>
+	</div>
+	<div class="e"> 
+		
+	</div>
+</body>
+</html>

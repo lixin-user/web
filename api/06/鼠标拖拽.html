@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav {
+      height: 30px;
+      background: #036663;
+      border-bottom: 1px solid #369;
+      line-height: 30px;
+      padding-left: 30px;
+    }
+    
+    .nav a {
+      color: #fff;
+      text-align: center;
+      font-size: 14px;
+      text-decoration: none;
+      
+    }
+    
+    .d-box {
+      width: 400px;
+      height: 300px;
+      border: 5px solid #eee;
+      box-shadow: 2px 2px 2px 2px #666;
+      position: absolute;
+      top: 40%;
+      left: 40%;
+      background-color: white;
+      
+      /* 不让文字被选中 */
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+    }
+    
+    .hd {
+      width: 100%;
+      height: 25px;
+      background-color: #7c9299;
+      border-bottom: 1px solid #369;
+      line-height: 25px;
+      color: white;
+      cursor: move; /*将鼠标编程移动标示*/
+    }
+    
+    #box_close {
+      float: right;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="javascript:void(0);" id="register">注册信息</a>
+  </div>
+  <div class="d-box" id="d_box">
+    <div class="hd" id="drop">注册信息 (可以拖拽)
+      <span id="box_close">【关闭】</span>
+    </div>
+    <div class="bd"></div>
+  </div>
+  <script>
+    var drop = document.getElementById('drop');
+    var box = document.getElementById('d_box');
+    drop .onmousedown = function(e){
+      var x = e.clientX;
+      var y = e.clientY;
+      var boxX = box.offsetLeft;
+      var boxY = box.offsetTop;
+      document.onmousemove = function(e){
+        var xx = e.clientX;
+        var yy = e.clientY; 
+        box.style.left = boxX+(xx-x)+'px';
+        box.style.top = boxY+(yy-y)+'px';
+      }
+    }
+    document.onmouseup = function(){
+      document.onmousemove = null;
+    }
+  </script>
+</body>
+</html>
